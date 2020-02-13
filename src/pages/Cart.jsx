@@ -12,31 +12,29 @@ function Cart() {
     <CartItem key={item.id} item={item} />
   ));
 
+  const buttonText = checkingOut ? "Ordering..." : "Place Order"
 
   function checkOut() {
     setCheckingOut(true);
     console.log(checkingOut);
     setTimeout(() => {
-      // console.log("Checkout Complete")
       setCheckingOut(false);
+      setCartItems([]);
     }, 3000);
-    setCartItems([]);
   }
 
   return (
     <main className="cart-page">
-      { checkingOut &&
-      <h1>Ordering...</h1> }
-      { !checkingOut &&
-      <>
         <h1>Check out</h1>
         {cartItemElements}
         <p className="total-cost">Total: {totalCostDisplay}</p>
+        {
+          cartItems.length > 0 ?
         <div className="order-button">
-        <button onClick={checkOut}>Place Order</button>
-      </div>
-      </>
-      }
+          <button onClick={checkOut}>{buttonText}</button>
+        </div>
+          : <p>No items in cart</p>
+        }
     </main>
   );
 }
